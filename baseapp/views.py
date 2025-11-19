@@ -8,11 +8,13 @@ def Home(request):
     sliders = SliderImage.objects.all()
     category = Category.objects.all()[:3]
     items = Items.objects.all()[:6]
+    feedbacks = Feedback.objects.all()
     return render(request, 'home.html', {
         'sliders':sliders,
         'offers':offers, 
         'category':category,
-        'items':items
+        'items':items, 
+        'feedbacks':feedbacks
     })
 
 def About(request):

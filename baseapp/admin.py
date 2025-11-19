@@ -32,8 +32,9 @@ class AboutusAdmin(admin.ModelAdmin):
 
 @admin.register(Feedback)
 class FeedbackAdmin(admin.ModelAdmin):
-    list_display = ("id", "username", "rating")
+    list_display = ("id", "username", "rating", "image")
     search_fields = ("username", "description")
+    list_editable = ('image',)
     list_filter = ("rating",)
     ordering = ("-rating",)
 

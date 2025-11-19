@@ -147,7 +147,7 @@
       <ul class="filters_menu">
         <li class="active" data-filter="*">All</li>
         {% for i in category %}
-        <li data-filter=".{{i.category_name}}">{{i.category_name}}</li>
+        <li data-filter=".{{i.category_name}}">{{i.category_name}} {% if forloop.last %}  -> {% endif %}</li>
         {% endfor %}
       </ul>
 
@@ -192,7 +192,7 @@
   
   <!-- book section -->
 
-  <section class="book_section layout_padding">
+  <section class="book_section layout_padding">                                      
     <div class="container">
       <div class="heading_container">
         <h2>
@@ -263,22 +263,22 @@
       
       <div class="carousel-wrap row ">
         <div class="owl-carousel client_owl-carousel">
-          {% for k in review %}
+          {% for k in feedbacks %}
           <div class="item">
             <div class="box">
               <div class="detail-box">
                 <p>
-                  {{k.Description}}
+                  {{k.description}}
                 </p>
                 <h6>
-                  {{k.User_name}}
+                  {{k.username}}
                 </h6>
                 <p>
-                  Rating : {{k.Rating}}/5
+                  Rating : {{k.rating}}/5
                 </p>
               </div>
               <div class="img-box">
-                <img src="/media/{{k.Image}}" alt="{{k.Image}}" class="box-img">
+                <img src="media/{{k.image}}" alt="{{k.Image}}" class="box-img">
               </div>
             </div>
           </div>
