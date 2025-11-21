@@ -28,13 +28,13 @@
             <form action="{% url 'Feedback_Form' %}" method="POST" enctype="multipart/form-data">
               {% csrf_token %}
               <div>
-                <input type="text" class="form-control" name="User_name" required placeholder="Your Name" />
+                <input type="text" class="form-control" name="username" required placeholder="Your Name" />
               </div>
               <div class="mb-3">
-                <textarea class="form-control" id="exampleFormControlTextarea1" name="Description" rows="3" required placeholder="Describe your experience here"></textarea>
+                <textarea class="form-control" id="exampleFormControlTextarea1" name="experience" rows="3" required placeholder="Describe your experience here"></textarea>
               </div>
               <div>
-                <select class="form-control nice-select wide" required name="Rating">
+                <select class="form-control nice-select wide" required name="rating">
                   <option value="" disabled selected>
                     Please Give Us Rating?
                   </option>
@@ -47,7 +47,7 @@
               </div>
               <div>
                 <label for="formFileLg" class="form-label">Upload Image:</label>
-                <input class="form-control form-control-lg" name="Selfie" id="formFileLg" type="file">
+                <input class="form-control form-control-lg" name="image" id="formFileLg" type="file">
               </div>
               <div class="btn_box">
                 <button type="submit">

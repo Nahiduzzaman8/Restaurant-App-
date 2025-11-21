@@ -29,9 +29,9 @@
               
               <div>
                 <p>
-                {% for i in data %}
-                {{ i.Description|safe }}
-                {% endfor %}
+                {% comment %} {% for i in about %} {% endcomment %}
+                {{ about.description|safe }}
+                {% comment %} {% endfor %} {% endcomment %}
               </p>
              </div>
              

@@ -202,44 +202,36 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form_container">
-            <form action="{% url "Book_Table" %}" method='POST'>{% csrf_token %}
-              <div>
-                <input type="text" class="form-control" name="user_name" required placeholder="Your Name" />
-              </div>
-              <div>
-                <input type="text" class="form-control" name="phone_number" required placeholder="Phone Number" />
-              </div>
-              <div>
-                <input type="email" class="form-control" name="user_email" placeholder="Your Email" />
-              </div>
-              <div>
-                <select class="form-control nice-select wide" required name="total_person">
-                  <option value="" disabled selected>
-                    How many persons?
-                  </option>
-                  <option value="2">
-                    2
-                  </option>
-                  <option value="3">
-                    3
-                  </option>
-                  <option value="4">
-                    4
-                  </option>
-                  <option value="5">
-                    5
-                  </option>
-                </select>
-              </div>
-              <div>
-                <input type="date" required name="booking_data" class="form-control">
-              </div>
-              <div class="btn_box">
-                <button>
-                  Book Now
-                </button>
-              </div>
-            </form>
+            <form action="{% url 'Book_Table' %}" method='POST'>{% csrf_token %}
+            <div>
+              <input type="text" class="form-control" name="username" required placeholder="Your Name" />
+            </div>
+            <div>
+              <input type="text" class="form-control" name="phonenumber" required placeholder="Phone Number" />
+            </div>
+            <div>
+              <input type="email" class="form-control" name="email" placeholder="Your Email" />
+            </div>
+            <div>
+              <select class="form-control nice-select wide" required name="totalperson">
+                <option value="" disabled selected>
+                  How many persons?
+                </option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+            <div>
+              <input type="date" required name="bookingdate" class="form-control">
+            </div>
+            <div class="btn_box">
+              <button>
+                Book Now
+              </button>
+            </div>
+          </form>
           </div>
         </div>
         <div class="col-md-6">
@@ -268,7 +260,7 @@
             <div class="box">
               <div class="detail-box">
                 <p>
-                  {{k.description}}
+                  {{k.shortdesc}}
                 </p>
                 <h6>
                   {{k.username}}

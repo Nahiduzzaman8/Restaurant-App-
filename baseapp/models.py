@@ -19,7 +19,7 @@ class Items(models.Model):
 
 class Aboutus(models.Model):
     description = models.TextField()
-
+    
     def __str__(self):
         return self.description
     
@@ -29,19 +29,23 @@ class Feedback(models.Model):
     rating = models.IntegerField()
     image = models.ImageField(upload_to='feedback_images/')
 
+    def shortdesc(self, length=140):
+        return (self.description[:length] + "...") if len(self.description) > length else self.description
+    
     def __str__(self):
         return self.username
     
 class Booktable(models.Model):
-    name =  models.CharField(max_length=15)
-    phone_number = models.IntegerField()
+    username =  models.CharField(max_length=15)
+    phonenumber = models.CharField()
     email = models.EmailField()
-    total_person = models.IntegerField()
-    booking_data = models.DateField()
+    totalperson = models.IntegerField()
+    bookingdate = models.DateField()
+    confirmed = models.BooleanField(default=False)
 
     
     def __str__(self):
-        return self.name
+        return self.username
 
 class SliderImage(models.Model):
     image = models.ImageField(upload_to='slider_images/')

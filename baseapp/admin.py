@@ -40,10 +40,11 @@ class FeedbackAdmin(admin.ModelAdmin):
 
 @admin.register(Booktable)
 class BooktableAdmin(admin.ModelAdmin):
-    list_display = ("id", "name", "phone_number", "email", "total_person", "booking_data")
-    search_fields = ("name", "email")
-    list_filter = ("booking_data", "total_person")
-    ordering = ("-booking_data",)
+    list_display = ("id", "username", "phonenumber", "email", "totalperson", "bookingdate","confirmed")
+    search_fields = ("username", "email")
+    list_filter = ("bookingdate", "totalperson")
+    list_editable = ('confirmed',)
+    ordering = ("-bookingdate",)
 
 @admin.register(SliderImage)
 class SliderImageAdmin(admin.ModelAdmin):
