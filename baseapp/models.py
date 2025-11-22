@@ -32,7 +32,7 @@ class Feedback(models.Model):
     def shortdesc(self, length=140):
         return (self.description[:length] + "...") if len(self.description) > length else self.description
     
-    def __str__(self):
+    def __str__(self): 
         return self.username
     
 class Booktable(models.Model):
