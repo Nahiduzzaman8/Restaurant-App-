@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from .models import *
-from django.http import HttpResponse
+from django.http import JsonResponse
 from django.contrib import messages
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
+from django.contrib.auth import authenticate
+from . import jwt_utils
 
 # Create your views here.
 def Home(request):
@@ -185,8 +187,25 @@ def Feedback_Form(request):
 
     return render(request, 'feedback.html')
 
-
+from django.views.decorators.csrf import csrf_exempt
+@csrf_exempt
 def login(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+
+        if user is None:
+            return JsonResponse({
+                "message":"Invalid credentials"
+            }, status=401)
+        print(user)
+        token = jwt_utils.create_jwt(user.id)
+        print(token)
+        return JsonResponse({
+            "token":token
+        })
+    
     return render(request, 'login.html')
 
 def signup(request):
