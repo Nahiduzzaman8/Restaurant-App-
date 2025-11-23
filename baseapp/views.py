@@ -189,10 +189,8 @@ def Feedback_Form(request):
 def login(request):
     return render(request, 'login.html')
 
-
 def signup(request):
     return render(request, 'login.html')
-
 
 def logout(request):
     return render(request, 'login.html')

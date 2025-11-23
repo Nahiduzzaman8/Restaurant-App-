@@ -43,7 +43,6 @@ class Booktable(models.Model):
     bookingdate = models.DateField()
     confirmed = models.BooleanField(default=False)
 
-    
     def __str__(self):
         return self.username
 
