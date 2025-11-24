@@ -21,5 +21,5 @@ def decode_jwt(token):
         return decodeerror
 
 
-token = create_jwt(78)
-print((token))
+# token = create_jwt(78)
+# print((token))
