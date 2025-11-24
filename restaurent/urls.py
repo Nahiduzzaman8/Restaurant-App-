@@ -4,6 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from baseapp import views
 from django.http import HttpResponse
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.Home, name='Home'),
@@ -13,5 +14,7 @@ urlpatterns = [
     path('feedback/', views.Feedback_Form, name='Feedback_Form'),
     path('login/', views.login, name='login'),
     path('signup/', views.signup, name='signup'),
-    path('logout/', views.signup, name='logout')
+    path('logout/', views.signup, name='logout'),
+    path('cartitems/', views.cartitems, name='cartitems') 
+    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

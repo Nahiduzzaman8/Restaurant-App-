@@ -11,14 +11,21 @@ def create_jwt(userid):
     token = jwt.encode(payload, Secret, algorithm= "HS256")
     return(token)
 
-def decode_jwt(token):
+
+from django.contrib.auth.models import User
+def decode_jwt(request):
     try:
+        token = request.COOKIES.get('token')
         payload = jwt.decode(token, Secret, algorithms= "HS256")
-        return(payload)
+        userid = payload.get('userid')
+        user = User.objects.get(id=userid)
+        return user
+    
     except jwt.ExpiredSignatureError as expired:
-        return expired
+        return None
+    
     except jwt.DecodeError as decodeerror:
-        return decodeerror
+        return None
 
 
 # token = create_jwt(78)

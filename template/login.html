@@ -103,7 +103,6 @@
           <p>{{ messages }}</p>
         </div>
         {% endif %}
-
       </div>
       <!-- Signup Form -->
       <div id="signup-form" style="display: none">
@@ -183,7 +182,8 @@
       }
     </script>
 
-    {% comment %} <script>
+    {% comment %}
+    <script>
       document
         .querySelector("form")
         .addEventListener("submit", async function (e) {
@@ -207,6 +207,9 @@
             window.location.href = "/";
           }
         });
-    </script> {% endcomment %}
+    </script>
+    {% endcomment %}
   </body>
 </html>
+
+

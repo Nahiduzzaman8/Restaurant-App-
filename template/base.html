@@ -239,7 +239,7 @@
     <!-- JavaScript for Cart Button -->
     <script>
       document.getElementById('cart-button').addEventListener('click', function() {
-        fetch('/get-cart-items/')
+        fetch('/cartitems/')
           .then(response => response.json())
           .then(data => {
             const cartList = document.getElementById('cart-items-list');
@@ -260,7 +260,7 @@
     </script>
 
 
-    <script>
+<script>
     const images = [
         {% for s in sliders %}
             "{{ s.image.url }}",

@@ -222,11 +222,28 @@ def login(request):
         response.set_cookie('token', token, httponly=True ) # set the token into cookie
         return response
     
-        # return JsonResponse({
-        #     "status":"success",
-        #     "message":"token genereted successfully",
+        # return JsonResponse({     #JSON response (JsonResponse) is for APIs. 
+        #     "status":"success",   #For regular HTML forms, redirect + cookie is the usual pattern.
+        #     "message":"token genereted successfully",    
         #     "token":token
         # }, status=200)
-        #
     
     return render(request, 'login.html')
+
+
+def cartitems(request):
+    user = jwt_utils.decode_jwt(request)
+    if not user:
+        return JsonResponse({"error": "Unauthorized"}, status=401)
+
+    items = Items.objects.filter(user=user)
+    data = [
+        {
+            "name": item.item_name,
+            "category": item.category,
+            "price": item.price
+        } for item in items
+    ]
+
+    return JsonResponse({"items": data})
+
