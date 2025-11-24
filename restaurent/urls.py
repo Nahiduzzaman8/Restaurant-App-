@@ -15,6 +15,6 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     path('signup/', views.signup, name='signup'),
     path('logout/', views.signup, name='logout'),
-    path('cartitems/', views.cartitems, name='cartitems') 
+    # path('cartitems/', views.cartitems, name='cartitems') 
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -231,19 +231,20 @@ def login(request):
     return render(request, 'login.html')
 
 
-def cartitems(request):
-    user = jwt_utils.decode_jwt(request)
-    if not user:
-        return JsonResponse({"error": "Unauthorized"}, status=401)
+# def cartitems(request):
+#     user = jwt_utils.decode_jwt(request)
+#     print(user)
+#     if not user:
+#         return JsonResponse({"error": "Unauthorized"}, status=401)
 
-    items = Items.objects.filter(user=user)
-    data = [
-        {
-            "name": item.item_name,
-            "category": item.category,
-            "price": item.price
-        } for item in items
-    ]
+#     items = Items.objects.filter(user=user)
+#     data = [
+#         {
+#             "name": item.item_name,
+#             "category": item.category,
+#             "price": item.price
+#         } for item in items
+#     ]
 
-    return JsonResponse({"items": data})
+#     return JsonResponse({"items": data})
 
