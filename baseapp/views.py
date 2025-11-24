@@ -211,8 +211,6 @@ def login(request):
             return render(request, "login.html", {
                 "messages":"Invalid Credentials"
             })   
-            # messages.error(request, "Invalid Password!!")
-            # return (request, 'login.html')
         
         #generete token
         token = jwt_utils.create_jwt(user.id)
