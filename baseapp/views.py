@@ -3,6 +3,7 @@ from .models import *
 from django.http import JsonResponse
 from django.contrib import messages
 from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 from . import jwt_utils
 
 # Create your views here.
@@ -193,7 +194,7 @@ def signup(request):
 def logout(request):
     return render(request, 'login.html')
 
-
+from django.contrib import messages
 from django.contrib.auth import authenticate
 from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
@@ -206,11 +207,12 @@ def login(request):
         user = authenticate(username=username, password=password)
 
         #checking user
-        if user is None:
-            return JsonResponse({
-                "status":"failed",
-                "message":"invaild credentials"
-            }, status=401)
+        if user is None:  
+            return render(request, "login.html", {
+                "messages":"Invalid Credentials"
+            })   
+            # messages.error(request, "Invalid Password!!")
+            # return (request, 'login.html')
         
         #generete token
         token = jwt_utils.create_jwt(user.id)
