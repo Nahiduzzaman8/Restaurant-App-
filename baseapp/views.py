@@ -211,15 +211,21 @@ def login(request):
             return render(request, "login.html", {
                 "messages":"Invalid Credentials"
             })   
+        if user.is_superuser:
+            return redirect('/admin/') 
         
         #generete token
         token = jwt_utils.create_jwt(user.id)
         print(token)
-        return JsonResponse({
-            "status":"success",
-            "message":"token genereted successfully",
-            "token":token
-        }, status=200)
+
+        response = redirect('Home')
+        response.set_cookie('token', token, httponly=True )
+        return response
+    
+        # return JsonResponse({
+        #     "status":"success",
+        #     "message":"token genereted successfully",
+        #     "token":token
+        # }, status=200)
     
     return render(request, 'login.html')
-
