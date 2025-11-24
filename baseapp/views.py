@@ -227,5 +227,6 @@ def login(request):
         #     "message":"token genereted successfully",
         #     "token":token
         # }, status=200)
+        #
     
     return render(request, 'login.html')
