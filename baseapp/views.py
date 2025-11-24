@@ -219,7 +219,7 @@ def login(request):
         print(token)
 
         response = redirect('Home')
-        response.set_cookie('token', token, httponly=True )
+        response.set_cookie('token', token, httponly=True ) # set the token into cookie
         return response
     
         # return JsonResponse({
