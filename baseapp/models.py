@@ -37,7 +37,7 @@ class Feedback(models.Model):
     
 class Booktable(models.Model):
     username =  models.CharField(max_length=15)
-    phonenumber = models.CharField()
+    phonenumber = models.CharField(max_length=20)
     email = models.EmailField()
     totalperson = models.IntegerField()
     bookingdate = models.DateField()

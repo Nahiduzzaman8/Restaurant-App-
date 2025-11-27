@@ -5,6 +5,9 @@ from django.contrib import messages
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from . import jwt_utils
+from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 def Home(request):
@@ -187,16 +190,51 @@ def Feedback_Form(request):
     return render(request, 'feedback.html')
 
 
-def signup(request):
-    return render(request, 'login.html')
-
-
 def logout(request):
     return render(request, 'login.html')
 
-from django.contrib import messages
-from django.contrib.auth import authenticate
-from django.views.decorators.csrf import csrf_exempt
+
+def signup(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+
+        # Manual validations
+        if len(username) < 3:
+            messages.error(request, "Username must be at least 3 characters long.")
+            return redirect('signup')
+
+        try:
+            validate_email(email)
+        except ValidationError:
+            messages.error(request, "Please enter a valid email address.")
+            return redirect('signup')
+
+        if password1 != password2:
+            messages.error(request, "Passwords do not match.")
+            return redirect('signup')
+
+        if User.objects.filter(username=username).exists():
+            messages.error(request, "Username already taken.")
+            return redirect('signup')
+
+        if User.objects.filter(email=email).exists():
+            messages.error(request, "Email already in use.")
+            return redirect('signup')
+
+        # Create user
+        user = User.objects.create_user(username=username, email=email, password=password1)
+        user.save()
+
+        messages.success(request, "Account created successfully.")
+        return redirect('login')
+
+    # For GET requests
+    return render(request, 'login.html')
+
+
 @csrf_exempt
 def login(request):
     if request.method == "POST":
@@ -229,22 +267,4 @@ def login(request):
         # }, status=200)
     
     return render(request, 'login.html')
-
-
-# def cartitems(request):
-#     user = jwt_utils.decode_jwt(request)
-#     print(user)
-#     if not user:
-#         return JsonResponse({"error": "Unauthorized"}, status=401)
-
-#     items = Items.objects.filter(user=user)
-#     data = [
-#         {
-#             "name": item.item_name,
-#             "category": item.category,
-#             "price": item.price
-#         } for item in items
-#     ]
-
-#     return JsonResponse({"items": data})
 

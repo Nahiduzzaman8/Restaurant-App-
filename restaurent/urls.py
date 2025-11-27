@@ -14,7 +14,7 @@ urlpatterns = [
     path('feedback/', views.Feedback_Form, name='Feedback_Form'),
     path('login/', views.login, name='login'),
     path('signup/', views.signup, name='signup'),
-    path('logout/', views.signup, name='logout'),
+    path('logout/', views.logout, name='logout'),
     # path('cartitems/', views.cartitems, name='cartitems') 
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
