@@ -245,28 +245,30 @@ def login(request):
         print(username, password)
         #authenticate
         user = authenticate(username=username, password=password)
-
+        print(user)
         #checking user
         if user is None:  
-            return render(request, "login.html", {
-                "messages":"Invalid Credentials"
-            })   
+            messages.error(request, "Invalid credintials!")
+
         if user.is_superuser:
             return redirect('/admin/') 
         
-        #generete token
-        token = jwt_utils.create_jwt(user.id)
-        print(token)
+        return redirect('Home')
 
-        response = redirect('Home')
-        response.set_cookie('token', token, httponly=True ) # set the token into cookie
-        return response
-    
+         
+    print("post is not working")
+    return render(request, 'login.html')
+
+#generete token
+        # token = jwt_utils.create_jwt(user.id)
+        # print(token)
+
+        # response = redirect('Home')
+        # response.set_cookie('token', token, httponly=True ) # set the token into cookie
+        # return response
+
         # return JsonResponse({     #JSON response (JsonResponse) is for APIs. 
         #     "status":"success",   #For regular HTML forms, redirect + cookie is the usual pattern.
         #     "message":"token genereted successfully",    
         #     "token":token
         # }, status=200)
-    
-    return render(request, 'login.html')
-
