@@ -8,6 +8,7 @@ from . import jwt_utils
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
+from django_ratelimit.decorators import ratelimit
 
 # Create your views here.
 def Home(request):
@@ -194,6 +195,7 @@ def logout(request):
     return render(request, 'login.html')
 
 
+@ratelimit(key='ip', rate='5/h', method='POST', block=True)
 def signup(request):
     if request.method == "POST":
         username = request.POST.get('username')
