@@ -98,9 +98,9 @@
           <button type="submit" class="btn btn-primary">Login</button>
         </form>
 
-        {% if messages %}
+        {% if error %}
         <div class="alert alert-danger">
-          <p>{{ messages }}</p>
+          <p>{{ error }}</p>
         </div>
         {% endif %}
       </div>

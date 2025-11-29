@@ -9,8 +9,11 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django_ratelimit.decorators import ratelimit
+import jwt
+import datetime
+from django.conf import settings
 
-# Create your views here.
+
 def Home(request):
     offers = Offer.objects.all()
     sliders = SliderImage.objects.all()
@@ -192,7 +195,13 @@ def Feedback_Form(request):
 
 
 def logout(request):
-    return render(request, 'login.html')
+    response = redirect("login")
+    response.delete_cookie("jwt")  # Just the name is enough
+    print(request)
+    return response
+
+
+
 
 
 @ratelimit(key='ip', rate='5/h', method='POST', block=True)
@@ -248,25 +257,39 @@ def login(request):
         print(user)
         #checking user
         if user is None:  
-            messages.error(request, "Invalid credintials!")
+            return render(request, "login.html", {"error": "Invalid credentials"})
 
         if user.is_superuser:
-            return redirect('/admin/') 
+            return redirect('/admin/')
         
-        return redirect('Home')
+        payload = {
+        "user_id": user.id,
+        "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=1),
+        "iat": datetime.datetime.utcnow(),
+        }
+        token = jwt_utils.create_jwt(user)
+        response = redirect("Home")  # THIS REDIRECTS TO HOME
 
-         
-    print("post is not working")
+        # Set JWT inside HttpOnly cookie
+        response.set_cookie(
+        key="access",
+        value=token,
+        httponly=False,
+        secure=False,        # True in production (HTTPS)
+        samesite="Strict",   # Prevent CSRF
+        max_age=3600,
+        )
+
+        return response
+    
     return render(request, 'login.html')
 
 #generete token
         # token = jwt_utils.create_jwt(user.id)
         # print(token)
-
         # response = redirect('Home')
         # response.set_cookie('token', token, httponly=True ) # set the token into cookie
         # return response
-
         # return JsonResponse({     #JSON response (JsonResponse) is for APIs. 
         #     "status":"success",   #For regular HTML forms, redirect + cookie is the usual pattern.
         #     "message":"token genereted successfully",    

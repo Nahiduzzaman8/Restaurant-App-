@@ -3,10 +3,11 @@ import datetime
 # from django.conf import settings
 Secret = "this is a secret key"
 
-def create_jwt(userid):
+def create_jwt(user):
     payload = {
-        "userid":userid, 
-        "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=15) # need to study about this
+        "user_id": user.id,
+        "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=1),
+        "iat": datetime.datetime.utcnow(),
     }
     token = jwt.encode(payload, Secret, algorithm= "HS256")
     return(token)
