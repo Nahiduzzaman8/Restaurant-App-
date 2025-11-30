@@ -88,3 +88,30 @@ class Offer(models.Model):
     def __str__(self):
         return "self.category"
     
+class ContactUs(models.Model):
+    location = models.CharField(max_length=20000, default="")
+    number = models.CharField(max_length=20)
+    email = models.CharField(max_length=200)
+    
+    def __str__(self):
+        # return f"{{self.number} {self.mail}}"
+        return f"{self.number} ({self.email}) ({self.location})"
+    
+
+class SocialMedia(models.Model):
+    facebook = models.CharField(max_length=20000, default="")
+    twitter = models.CharField(max_length=20000, default="")
+    linkedin = models.CharField(max_length=20000, default="")
+    instagram = models.CharField(max_length=20000, default="")
+    pinterest = models.CharField(max_length=20000, default="")
+
+    def __str__(self):
+        return "ftlip"
+
+
+class Opening_Hours(models.Model):
+    opening_day = models.CharField(max_length=20)
+    opening_time = models.CharField(max_length=200)
+
+    def __str__(self):
+        return f"{self.opening_day} ({self.opening_time})"

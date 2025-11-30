@@ -1,5 +1,6 @@
 import jwt
 import datetime
+from django.http import JsonResponse
 # from django.conf import settings
 Secret = "this is a secret key"
 
@@ -14,13 +15,10 @@ def create_jwt(user):
 
 
 from django.contrib.auth.models import User
-def decode_jwt(request):
+def decode_jwt(token):
     try:
-        token = request.COOKIES.get('token')
         payload = jwt.decode(token, Secret, algorithms= "HS256")
-        user_id = payload.get('user_id')
-        user = User.objects.get(id=user_id)
-        return user
+        return payload
     
     except jwt.ExpiredSignatureError as expired:
         return None
@@ -28,6 +26,3 @@ def decode_jwt(request):
     except jwt.DecodeError as decodeerror:
         return None
 
-
-# token = create_jwt(78)
-# print((token))

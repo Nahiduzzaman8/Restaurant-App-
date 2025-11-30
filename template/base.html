@@ -76,11 +76,11 @@
             <div class="user_option">
               <div class="user_option">
                 {% if user %}
-                  <span style="background-color: #f8c6c6; color: #000; padding: 5px 10px; border-radius: 5px; font-weight: bold;">
+                  {% comment %} <span style="background-color: #f8c6c6; color: #000; padding: 5px 10px; border-radius: 5px; font-weight: bold;">
                     {{ user.username }}
-                  </span>
+                  </span> {% endcomment %}
                   <a href="{% url 'logout' %}" class="btn btn-secondary">Logout</a>
-{% comment %} script {% endcomment %} <button id="cart-button" class="btn btn-primary"> 
+                  <button id="cart-button" class="btn btn-primary"> 
                     <i class="fa fa-shopping-cart"></i> Cart
                   </button>
                 {% else %}
@@ -95,41 +95,38 @@
     </header>
     <!-- end header section -->
 
-    <!-- Cart Popup Modal -->
-    <div id="cart-modal" class="modal fade" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Your Cart</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <ul id="cart-items-list">
-              <!-- Cardsafsdft items will be dynamically loaded here -->
-               asdfsdf
-            </ul>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
+
+{% comment %} modal cart {% endcomment %}
+<div id="cart-modal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Your Cart</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
+
+      <div class="modal-body">
+        <ul id="cart-items-list" class="list-unstyled">
+          <!-- Cart items will be loaded here -->
+        </ul>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+
     </div>
+  </div>
+</div>
+
 
     {% block slider %}{% endblock slider %}
   </div>
 
  {% block main %}
- 
- 
- 
- 
- 
- 
- 
- 
  
  
  
@@ -144,8 +141,9 @@
             <h4>
               Contact Us
             </h4>
+            
             <div class="contact_link_box">
-              <a href="">
+              <a href="{{contactus.location}}">
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
                 <span>
                   Location
@@ -154,16 +152,17 @@
               <a href="">
                 <i class="fa fa-phone" aria-hidden="true"></i>
                 <span>
-                  Call +01 1234567890
+                  Call +880 1759547738{% comment %}  {{contactus.number}} {% endcomment %}
                 </span>
               </a>
               <a href="">
                 <i class="fa fa-envelope" aria-hidden="true"></i>
                 <span>
-                  demo@gmail.com
+                  nahiduzzamantalukder@gmail.com {% comment %} {{contactus.email}} {% endcomment %}
                 </span>
               </a>
             </div>
+            
           </div>
         </div>
         <div class="col-md-4 footer-col">
@@ -175,19 +174,19 @@
               Necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with
             </p>
             <div class="footer_social">
-              <a href="">
+              <a href="{{sociallinks.facebook}}">
                 <i class="fa fa-facebook" aria-hidden="true"></i>
               </a>
-              <a href="">
+              <a href="{{sociallinks.twitter}}">
                 <i class="fa fa-twitter" aria-hidden="true"></i>
               </a>
-              <a href="">
+              <a href="{{sociallinks.linkedin}}">
                 <i class="fa fa-linkedin" aria-hidden="true"></i>
               </a>
-              <a href="">
+              <a href="{{sociallinks.instagram}}">
                 <i class="fa fa-instagram" aria-hidden="true"></i>
               </a>
-              <a href="">
+              <a href="{{sociallinks.pinterest}}">
                 <i class="fa fa-pinterest" aria-hidden="true"></i>
               </a>
             </div>
@@ -198,10 +197,12 @@
             Opening Hours
           </h4>
           <p>
-            Everyday
+            {% comment %} {{opening_hours.opening_day}} {% endcomment %}
+             Everyday
           </p>
           <p>
-            10.00 Am -10.00 Pm
+            {% comment %} {{opening_hours.opening_time}} {% endcomment %}
+          10:00 AM - 11:00 PM
           </p>
         </div>
       </div>
@@ -237,30 +238,52 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
   </script>
   <!-- End Google Map -->
-    <!-- JavaScript for Cart Button -->
-    <script>
-      document.getElementById('cart-button').addEventListener('click', function() {
-        fetch('/cartitems/')
-          .then(response => response.json())
-          .then(data => {
-            const cartList = document.getElementById('cart-items-list');
-            cartList.innerHTML = '';
-            if (data.items) {
-              data.items.forEach(item => {
-                cartList.innerHTML += `
-                  <li>${item.name} - ${item.quantity} x $${item.price} = $${item.total}</li>
-                `;
-              });
-            } else {
-              cartList.innerHTML = '<li>Your cart is empty.</li>';
-            }
-            $('#cart-modal').modal('show');
-          })
-          .catch(error => console.error('Error fetching cart items:', error));
-      });
-    </script>
+
+  {% comment %} cart button on top {% endcomment %}
+<script>
+    document.getElementById('cart-button').addEventListener('click', function() {
+
+  fetch('/get_cart_items/')
+    .then(response => response.json())
+    .then(data => {
+
+      const cartList = document.getElementById('cart-items-list');
+      cartList.innerHTML = '';
+
+      if (data.items && data.items.length > 0) {
+
+        data.items.forEach(item => {
+          cartList.innerHTML += `
+            <li class="media mb-3 p-2 border rounded">
+
+              <img src="${item.image}" 
+                   class="mr-3" 
+                   style="width: 70px; height: 70px; object-fit: cover; border-radius: 5px;">
+
+              <div class="media-body">
+                <h6 class="mt-0 mb-1">${item.name}</h6>
+                <p class="mb-0">
+                  Quantity: ${item.quantity}<br>
+                  Price: TK ${item.price}<br>
+                  Total: TK ${item.total}
+                </p>
+              </div>
+
+            </li>
+          `;
+        });
+
+      } else {
+        cartList.innerHTML = '<li>Your cart is empty.</li>';
+      }
+
+      $('#cart-modal').modal('show');
+    })
+    .catch(error => console.error('Error fetching cart items:', error));});
+</script>
 
 
+{% comment %} slider Image {% endcomment %}
 <script>
     const images = [
         {% for s in sliders %}
@@ -280,7 +303,7 @@
     changeBackground();
 
     // Change every 5 seconds
-    setInterval(changeBackground, 3000);
+    setInterval(changeBackground, 1500);
 </script>
 
 </body>

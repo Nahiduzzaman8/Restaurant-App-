@@ -12,7 +12,7 @@ from django_ratelimit.decorators import ratelimit
 import jwt
 import datetime
 from django.conf import settings
-
+import json
 
 def Home(request):
     offers = Offer.objects.all()
@@ -20,7 +20,7 @@ def Home(request):
     category = Category.objects.all()[:3]
     items = Items.objects.all()[:6]
     feedbacks = Feedback.objects.all() 
-    print(request)
+    
     return render(request, 'home.html', {
         'sliders':sliders,
         'offers':offers, 
@@ -32,8 +32,30 @@ def Home(request):
 
 def About(request):
     about = Aboutus.objects.last()
+    contactus = ContactUs.objects.last()
+    sociallinks = SocialMedia.objects.last()
+    opening_hours = Opening_Hours.objects.last()
+
     return render(request, 'about.html',{
-        'about':about
+        'about':about,
+        'contactus': {
+            "location":contactus.location,
+            "number":contactus.number,
+            "email":contactus.email,
+
+        },
+        'sociallinks': {
+            "facebook":sociallinks.facebook,
+            "twitter":sociallinks.twitter,
+            "linkedin":sociallinks.linkedin,
+            "instagram":sociallinks.instagram,
+            "pinterest":sociallinks.pinterest,
+
+        },
+        'opening_hours': {
+            "opening_day":opening_hours.opening_day,
+            "opening_time":opening_hours.opening_time
+        }
     })
 
 
@@ -197,8 +219,8 @@ def Feedback_Form(request):
 
 def logout(request):
     response = redirect("login")
-    response.delete_cookie("jwt")  # Just the name is enough
-    print(request)
+    response.delete_cookie("access") 
+
     return response
 
 
@@ -245,14 +267,15 @@ def signup(request):
 
 
 @csrf_exempt
+@ratelimit(key='ip', rate='5/h', method='POST', block=True)
 def login(request):
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
-        print(username, password)
+
         #authenticate
         user = authenticate(username=username, password=password)
-        print(user)
+        
         #checking user
         if user is None:  
             return render(request, "login.html", {"error": "Invalid credentials"})
@@ -281,9 +304,77 @@ def login(request):
 
 
 def add_to_cart(request):
+    if request.method != "POST":
+        return JsonResponse({
+            "message":"Invalid method"
+        }, status=400)
+    
+    token = request.COOKIES.get('access')
+    if not token :
+        return JsonResponse({
+            "message":"Not logged in"
+        }, status=401)
+    
+    payload = jwt_utils.decode_jwt(token)
+    if not payload:
+        return JsonResponse({
+            "message": "Invalid token"
+        }, status=401)
+
+    user_id = payload['user_id']
+    user = User.objects.get(id=user_id)
+    body = json.loads(request.body)
+
+    item_id = body['item_id']
+    if not item_id:
+        return JsonResponse({
+            "message": "item_id required"
+        },status=400)
+    
+    item = Items.objects.get(id=item_id)
+
+    # 4. Get/create user cart
+    cart, created = Cart.objects.get_or_create(user=user)
+
+    # 5. Check if item already in cart
+    cart_item, created = CartItem.objects.get_or_create(cart=cart, item=item)
+
+    cart_item.quantity += 1
+    cart_item.save()
+
+    return JsonResponse({
+    "message": "Item added to cart successfully",
+    # "item_id": body["item_id"]
+})
     
 
-    print(token)
-    return redirect("Menu")
+def get_cart_items(request):
+    # 1. JWT from cookie
+    token = request.COOKIES.get("access")
+    if not token:
+        return JsonResponse({"error": "Not logged in"}, status=401)
+
+    # 2. decode
+    payload = jwt_utils.decode_jwt(token)
+    if payload is None:
+        return JsonResponse({"error": "Invalid token"}, status=401)
     
-    
+    user_id = payload["user_id"]
+    user = User.objects.get(id=user_id)
+
+    # 3. Get the user's cart
+    cart, created = Cart.objects.get_or_create(user=user)
+
+    # 4. Build response data
+    data = []
+    for item in cart.items.all():
+        data.append({
+            "name": item.item.item_name,
+            "price": item.item.price,
+            "quantity": item.quantity,
+            "total": item.item.price * item.quantity,
+            "image": item.item.image.url
+        })
+
+    return JsonResponse({"items": data})
+

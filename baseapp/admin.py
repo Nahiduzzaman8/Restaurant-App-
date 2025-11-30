@@ -1,6 +1,6 @@
 
 from django.contrib import admin
-from .models import Category, Items, Aboutus, Feedback, Booktable, SliderImage, Offer
+from .models import Category, Items, Aboutus, Feedback, Booktable, SliderImage, Offer, Cart, CartItem,ContactUs, SocialMedia,Opening_Hours
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -55,3 +55,25 @@ class SliderImageAdmin(admin.ModelAdmin):
 class OfferAdmin(admin.ModelAdmin):
     list_display = ("category","percent","image",)
     list_editable = ('image',"percent",)
+
+@admin.register(Cart)
+class CartAdmin(admin.ModelAdmin):
+    list_display = ("user","updated_at")
+    
+@admin.register(CartItem)
+class CartItemAdmin(admin.ModelAdmin):
+    list_display = ("cart","item","quantity","added_at",)
+
+@admin.register(ContactUs)
+class ContactUsAdmin(admin.ModelAdmin):
+    list_display = ("number","email")
+
+@admin.register(SocialMedia)
+class SocialMediaAdmin(admin.ModelAdmin):
+    list_display = ("id", "facebook","twitter","linkedin","instagram","pinterest")
+    list_editable = ("facebook","twitter", "linkedin","instagram", "pinterest")  
+
+@admin.register(Opening_Hours)
+class Opening_HoursAdmin(admin.ModelAdmin):
+    list_display = ("id", "opening_day","opening_time")
+    list_editable = ("opening_day","opening_time")  
