@@ -281,27 +281,8 @@ def login(request):
 
 
 def add_to_cart(request):
-    if request.method != "POST":
-        return JsonResponse({
-            "message":"Invalid method"
-        }, status=400)
     
-    token = request.COOKIES.get('access')
-    if not token :
-        return JsonResponse({
-            "message":"Not logged in"
-        }, status=401)
-    
-    payload = jwt_utils.decode_jwt(token)
-    if not payload:
-        return JsonResponse({
-            "message": "Invalid token"
-        }, status=401)
-    
-    user_id = payload['user_id']
-    user = User.objects.get(id=user_id)
 
-    
     print(token)
     return redirect("Menu")
     
