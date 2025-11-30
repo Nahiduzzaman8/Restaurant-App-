@@ -72,7 +72,7 @@
         const itemName = this.getAttribute('data-item-name');
         const itemPrice = this.getAttribute('data-item-price');
   
-        fetch('/add-to-cart/', {
+        fetch('/add_to_cart/', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -83,7 +83,7 @@
         .then(response => response.json())
         .then(data => {
           if (data.message) {
-            alert(data.message);
+            console.log(data.message);
           } else {
             alert('Failed to add item to cart.');
           }

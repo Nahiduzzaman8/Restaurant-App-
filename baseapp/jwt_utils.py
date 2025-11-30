@@ -18,8 +18,8 @@ def decode_jwt(request):
     try:
         token = request.COOKIES.get('token')
         payload = jwt.decode(token, Secret, algorithms= "HS256")
-        userid = payload.get('userid')
-        user = User.objects.get(id=userid)
+        user_id = payload.get('user_id')
+        user = User.objects.get(id=user_id)
         return user
     
     except jwt.ExpiredSignatureError as expired:

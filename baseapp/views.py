@@ -20,6 +20,7 @@ def Home(request):
     category = Category.objects.all()[:3]
     items = Items.objects.all()[:6]
     feedbacks = Feedback.objects.all() 
+    print(request)
     return render(request, 'home.html', {
         'sliders':sliders,
         'offers':offers, 
@@ -201,9 +202,6 @@ def logout(request):
     return response
 
 
-
-
-
 @ratelimit(key='ip', rate='5/h', method='POST', block=True)
 def signup(request):
     if request.method == "POST":
@@ -258,9 +256,6 @@ def login(request):
         #checking user
         if user is None:  
             return render(request, "login.html", {"error": "Invalid credentials"})
-
-        if user.is_superuser:
-            return redirect('/admin/')
         
         payload = {
         "user_id": user.id,
@@ -284,14 +279,30 @@ def login(request):
     
     return render(request, 'login.html')
 
-#generete token
-        # token = jwt_utils.create_jwt(user.id)
-        # print(token)
-        # response = redirect('Home')
-        # response.set_cookie('token', token, httponly=True ) # set the token into cookie
-        # return response
-        # return JsonResponse({     #JSON response (JsonResponse) is for APIs. 
-        #     "status":"success",   #For regular HTML forms, redirect + cookie is the usual pattern.
-        #     "message":"token genereted successfully",    
-        #     "token":token
-        # }, status=200)
+
+def add_to_cart(request):
+    if request.method != "POST":
+        return JsonResponse({
+            "message":"Invalid method"
+        }, status=400)
+    
+    token = request.COOKIES.get('access')
+    if not token :
+        return JsonResponse({
+            "message":"Not logged in"
+        }, status=401)
+    
+    payload = jwt_utils.decode_jwt(token)
+    if not payload:
+        return JsonResponse({
+            "message": "Invalid token"
+        }, status=401)
+    
+    user_id = payload['user_id']
+    user = User.objects.get(id=user_id)
+
+    
+    print(token)
+    return redirect("Menu")
+    
+    
