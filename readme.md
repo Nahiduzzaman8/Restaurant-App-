@@ -24,7 +24,7 @@ This project is designed for production-ready backend practices and clean UI/UX 
 - Cart stored in database (per-user).
 - Modal display with item image, price, quantity, and total.
 
-### **User Interface Components**
+### **User Interface Components (Taken from free template)**
 - Dynamic modal for cart.
 - Fully responsive HTML/CSS templates.
 - Bootstrap 4 and FontAwesome integration.
@@ -66,7 +66,7 @@ Admin panel provides full CRUD operations and media file handling.
 - Django
 - SQLite / PostgreSQL
 
-### Frontend
+### Frontend(Taken from free template)
 - HTML5, CSS3
 - Bootstrap 4
 - JavaScript (Fetch API)
@@ -180,8 +180,15 @@ Response:
 ---
 
 ## Screenshots
-
-![alt text](media/item_images/Chicken_Chowmein.jpg)
+![alt text](media/screenshots/1.webp)
+![alt text](media/screenshots/2.webp)
+![alt text](media/screenshots/3.webp)
+![alt text](media/screenshots/4.webp)
+![alt text](media/screenshots/5.webp)
+![alt text](media/screenshots/6.webp)
+![alt text](media/screenshots/7.webp)
+![alt text](media/screenshots/8.webp)
+![alt text](media/screenshots/9.webp)
 ---
 
 ## Future Improvements
