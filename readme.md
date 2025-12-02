@@ -180,8 +180,8 @@ Response:
 ---
 
 ## Screenshots
-[alt text](media/item_images/Garlic_Butter_Noodles_.jpg)
 
+![alt text](media/item_images/Chicken_Chowmein.jpg)
 ---
 
 ## Future Improvements
