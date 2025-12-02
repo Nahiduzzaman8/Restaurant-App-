@@ -192,10 +192,12 @@ Response:
 ---
 
 ## Future Improvements
+- Cart item management
 - Order checkout system
 - Payment gateway integration
 - Admin dashboard for managing items
 - Real-time order updates
+
 
 ---
 
