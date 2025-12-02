@@ -183,12 +183,12 @@ Response:
 ![alt text](media/screenshots/1.webp)
 ![alt text](media/screenshots/2.webp)
 ![alt text](media/screenshots/3.webp)
-![alt text](media/screenshots/4.webp)
-![alt text](media/screenshots/5.webp)
-![alt text](media/screenshots/6.webp)
-![alt text](media/screenshots/7.webp)
-![alt text](media/screenshots/8.webp)
-![alt text](media/screenshots/9.webp)
+![alt text](media/screenshots/4.jpg)
+![alt text](media/screenshots/5.jpg)
+![alt text](media/screenshots/6.jpg)
+![alt text](media/screenshots/7.jpg)
+![alt text](media/screenshots/8.jpg)
+![alt text](media/screenshots/9.jpg)
 ---
 
 ## Future Improvements
