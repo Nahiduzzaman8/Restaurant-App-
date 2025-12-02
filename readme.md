@@ -6,6 +6,18 @@ This project is designed for production-ready backend practices and clean UI/UX 
 
 ---
 
+## Screenshots
+![alt text](media/screenshots/1.webp)
+![alt text](media/screenshots/2.webp)
+![alt text](media/screenshots/3.webp)
+![alt text](media/screenshots/4.jpg)
+![alt text](media/screenshots/5.jpg)
+![alt text](media/screenshots/6.jpg)
+![alt text](media/screenshots/7.jpg)
+![alt text](media/screenshots/8.jpg)
+![alt text](media/screenshots/9.jpg)
+---
+
 ## Features
 
 ### **Authentication (JWT Cookie Based)**
@@ -38,23 +50,14 @@ This project is designed for production-ready backend practices and clean UI/UX 
 
 This project extensively uses Django’s built-in Admin Panel for backend management.
 Through the admin interface, you can easily manage:
-
 Categories
-
 Items (with images)
-
 Offers and discounts
-
 Slider images
-
 Feedback entries
-
 Table bookings
-
 Contact information
-
 About section content
-
 Admin panel provides full CRUD operations and media file handling.
 
 ---
@@ -177,18 +180,6 @@ Response:
 3. For every protected route, JWT is extracted and validated.
 4. If token is invalid or missing, return 401.
 
----
-
-## Screenshots
-![alt text](media/screenshots/1.webp)
-![alt text](media/screenshots/2.webp)
-![alt text](media/screenshots/3.webp)
-![alt text](media/screenshots/4.jpg)
-![alt text](media/screenshots/5.jpg)
-![alt text](media/screenshots/6.jpg)
-![alt text](media/screenshots/7.jpg)
-![alt text](media/screenshots/8.jpg)
-![alt text](media/screenshots/9.jpg)
 ---
 
 ## Future Improvements
