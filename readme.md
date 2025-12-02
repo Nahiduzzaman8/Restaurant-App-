@@ -180,7 +180,7 @@ Response:
 ---
 
 ## Screenshots
-Add your UI screenshots here.
+[alt text](media/item_images/Garlic_Butter_Noodles_.jpg)
 
 ---
 
