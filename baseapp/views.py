@@ -177,10 +177,6 @@ def Feedback_Form(request):
                 messages.error(request, "Image size cannot exceed 2MB.")
                 return redirect('Feedback_Form')
 
-        # -----------------------
-        # END VALIDATION BLOCK
-        # -----------------------
-
         # Save data only if all validations pass
         try:
             Feedback.objects.create(
